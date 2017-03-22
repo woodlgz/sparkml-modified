@@ -290,7 +290,6 @@ private[spark] object GradientBoostedTrees extends Logging {
 
     // Initialize tree
     timer.start("building tree 0")
-    input.saveAsTextFile("scala-tr-svm")
     val originLabelAvg = input.map(point => point.label).sum()/input.count()
     val labelBias = math.log1p(originLabelAvg)-math.log1p(-originLabelAvg)
     logError("originLabelAvg:" + originLabelAvg)
