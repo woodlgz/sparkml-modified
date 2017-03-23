@@ -27,7 +27,7 @@ import org.apache.spark.mllib.util.MLUtils
  * This uses twice the binomial negative log likelihood, called "deviance" in Friedman (1999).
  *
  * The log loss is defined as:
- *   2 log(1 + exp(-2 y F(x)))
+ *   log(1 + exp(-y F(x)))
  * where y is a label in {-1, 1} and F(x) is the model prediction for features x.
  */
 @Since("1.2.0")
@@ -37,19 +37,19 @@ object LogLoss extends Loss {
   /**
    * Method to calculate the loss gradients for the gradient boosting calculation for binary
    * classification
-   * The gradient with respect to F(x) is: - 4 y / (1 + exp(2 y F(x)))
+   * The gradient with respect to F(x) is: - y / (1 + exp( y F(x)))
    * @param prediction Predicted label.
    * @param label True label.
    * @return Loss gradient
    */
   @Since("1.2.0")
   override def gradient(prediction: Double, label: Double): Double = {
-    - 2.0 * label / (1.0 + math.exp(2.0 * label * prediction))
+    - 1.0 * label / (1.0 + math.exp(label * prediction))
   }
 
   override private[spark] def computeError(prediction: Double, label: Double): Double = {
-    val margin = 2.0 * label * prediction
-    // The following is equivalent to 2.0 * log(1 + exp(-margin)) but more numerically stable.
+    val margin = 1.0 * label * prediction
+    // The following is equivalent to 1.0 * log(1 + exp(-margin)) but more numerically stable.
     1.0 * MLUtils.log1pExp(-margin)
   }
 }

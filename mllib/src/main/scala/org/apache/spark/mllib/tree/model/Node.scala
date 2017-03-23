@@ -141,7 +141,7 @@ class Node @Since("1.2.0") (
     }
     val prefix: String = " " * indentFactor
     if (isLeaf) {
-      prefix + s"Predict: ${predict.predict}\n"
+      prefix + s"Predict: ${predict.predict} PredictStr: ${predict.predictStr}\n"
     } else {
       prefix + s"If ${splitToString(split.get, left = true)}\n" +
         leftNode.get.subtreeToString(indentFactor + 1) +

@@ -110,11 +110,13 @@ private[spark] class Variance4GBDTCalculator(stats: Array[Double])
     0
   } else {
     /* if the LogLoss Function Changed,changed here */
-    stats(1) / (2*stats(3)-stats(2))
+    stats(1) / (stats(3)-stats(2))
   }
+
+  override def predictStr: String = toString()
 
   override def toString: String = {
     s"Variance4GBDTAggregator(cnt = ${stats(0)}, sum = ${stats(1)}," +
-      s" sum2 = ${stats(2)},sum3 = ${stats(3)})"
+      s" square_sum = ${stats(2)},abs_sum = ${stats(3)})"
   }
 }

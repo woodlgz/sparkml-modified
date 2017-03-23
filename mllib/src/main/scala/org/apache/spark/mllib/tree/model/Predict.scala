@@ -29,7 +29,8 @@ import org.apache.spark.annotation.{DeveloperApi, Since}
 @DeveloperApi
 class Predict @Since("1.2.0") (
     @Since("1.2.0") val predict: Double,
-    @Since("1.2.0") val prob: Double = 0.0) extends Serializable {
+    @Since("1.2.0") val prob: Double = 0.0,
+    @Since("2.0.2") val predictStr: String = "" ) extends Serializable {
 
   override def toString: String = s"$predict (prob = $prob)"
 

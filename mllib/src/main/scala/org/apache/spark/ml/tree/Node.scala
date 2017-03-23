@@ -124,14 +124,14 @@ class LeafNode private[ml] (
 
   override private[tree] def subtreeToString(indentFactor: Int = 0): String = {
     val prefix: String = " " * indentFactor
-    prefix + s"Predict: $prediction\n"
+    prefix + s"Predict: $prediction " + impurityStats.predictStr + "\n"
   }
 
   override private[tree] def subtreeDepth: Int = 0
 
   override private[ml] def toOld(id: Int): OldNode = {
-    new OldNode(id, new OldPredict(prediction, prob = impurityStats.prob(prediction)),
-      impurity, isLeaf = true, None, None, None, None)
+    new OldNode(id, new OldPredict(prediction, prob = impurityStats.prob(prediction),
+      impurityStats.predictStr), impurity, isLeaf = true, None, None, None, None)
   }
 
   override private[ml] def maxSplitFeatureIndex(): Int = -1
